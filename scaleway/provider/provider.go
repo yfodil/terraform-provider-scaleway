@@ -287,6 +287,10 @@ func Provider(config *Config) plugin.ProviderFunc {
 				return config.Meta, nil
 			}
 
+			if p.Meta() != nil {
+				return p.Meta(), nil
+			}
+
 			m, err := meta.NewMeta(ctx, &meta.Config{
 				ProviderSchema:   data,
 				TerraformVersion: terraformVersion,
