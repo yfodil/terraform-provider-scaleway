@@ -282,6 +282,11 @@ func Provider(config *Config) plugin.ProviderFunc {
 		p.ConfigureContextFunc = func(ctx context.Context, data *schema.ResourceData) (interface{}, diag.Diagnostics) {
 			terraformVersion := p.TerraformVersion
 
+			if p.Meta() != nil {
+				config.Meta = p.Meta().(*meta.Meta)
+				return config.Meta, nil
+			}
+
 			// If we provide meta in config use it. This is useful for tests
 			if config.Meta != nil {
 				return config.Meta, nil
