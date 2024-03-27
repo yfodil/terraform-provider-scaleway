@@ -10,9 +10,9 @@ import (
 	"github.com/scaleway/scaleway-sdk-go/scw"
 	"github.com/scaleway/terraform-provider-scaleway/v2/internal/locality/regional"
 	"github.com/scaleway/terraform-provider-scaleway/v2/internal/locality/zonal"
-	"github.com/scaleway/terraform-provider-scaleway/v2/internal/meta"
 	"github.com/scaleway/terraform-provider-scaleway/v2/internal/verify"
 	"github.com/scaleway/terraform-provider-scaleway/v2/scaleway"
+	"github.com/scaleway/terraform-provider-scaleway/v2/scaleway/meta"
 )
 
 var terraformBetaEnabled = os.Getenv(scw.ScwEnableBeta) != ""

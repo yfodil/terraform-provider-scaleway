@@ -5,7 +5,7 @@ import (
 	jobs "github.com/scaleway/scaleway-sdk-go/api/jobs/v1alpha1"
 	"github.com/scaleway/scaleway-sdk-go/scw"
 	"github.com/scaleway/terraform-provider-scaleway/v2/internal/locality/regional"
-	"github.com/scaleway/terraform-provider-scaleway/v2/internal/meta"
+	"github.com/scaleway/terraform-provider-scaleway/v2/scaleway/meta"
 )
 
 // jobsAPIWithRegion returns a new jobs API and the region for a Create request

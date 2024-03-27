@@ -8,9 +8,9 @@ import (
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/scaleway/terraform-provider-scaleway/v2/internal/meta"
-	"github.com/scaleway/terraform-provider-scaleway/v2/internal/provider"
 	"github.com/scaleway/terraform-provider-scaleway/v2/internal/transport"
+	"github.com/scaleway/terraform-provider-scaleway/v2/scaleway/meta"
+	"github.com/scaleway/terraform-provider-scaleway/v2/scaleway/provider"
 	"github.com/stretchr/testify/require"
 )
 
