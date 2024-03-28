@@ -296,6 +296,7 @@ func Provider(config *Config) plugin.ProviderFunc {
 			m, err := meta.NewMeta(ctx, &meta.Config{
 				ProviderSchema:   data,
 				TerraformVersion: terraformVersion,
+				UserAgent:        config.CrossplaneUserAgent,
 			})
 			if err != nil {
 				return nil, diag.FromErr(err)
