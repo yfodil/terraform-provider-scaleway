@@ -21,7 +21,8 @@ var terraformBetaEnabled = os.Getenv(scw.ScwEnableBeta) != ""
 type Config struct {
 	// Meta can be used to override Meta that will be used by the provider.
 	// This is useful for tests.
-	Meta *meta.Meta
+	Meta                *meta.Meta
+	CrossplaneUserAgent string
 }
 
 // DefaultConfig return default Config struct
@@ -284,6 +285,11 @@ func Provider(config *Config) plugin.ProviderFunc {
 
 			// If we provide meta in config use it. This is useful for tests
 			if config.Meta != nil {
+				return config.Meta, nil
+			}
+
+			if p.Meta() != nil {
+				config.Meta = p.Meta().(*meta.Meta)
 				return config.Meta, nil
 			}
 
