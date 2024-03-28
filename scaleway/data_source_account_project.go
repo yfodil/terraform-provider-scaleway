@@ -8,9 +8,9 @@ import (
 	accountV3 "github.com/scaleway/scaleway-sdk-go/api/account/v3"
 	"github.com/scaleway/scaleway-sdk-go/scw"
 	"github.com/scaleway/terraform-provider-scaleway/v2/internal/datasource"
-	"github.com/scaleway/terraform-provider-scaleway/v2/internal/meta"
 	"github.com/scaleway/terraform-provider-scaleway/v2/internal/types"
 	"github.com/scaleway/terraform-provider-scaleway/v2/internal/verify"
+	"github.com/scaleway/terraform-provider-scaleway/v2/scaleway/meta"
 )
 
 func DataSourceScalewayAccountProject() *schema.Resource {

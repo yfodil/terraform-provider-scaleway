@@ -27,9 +27,9 @@ import (
 	"github.com/scaleway/scaleway-sdk-go/scw"
 	"github.com/scaleway/terraform-provider-scaleway/v2/internal/locality"
 	"github.com/scaleway/terraform-provider-scaleway/v2/internal/locality/regional"
-	"github.com/scaleway/terraform-provider-scaleway/v2/internal/meta"
 	"github.com/scaleway/terraform-provider-scaleway/v2/internal/types"
 	"github.com/scaleway/terraform-provider-scaleway/v2/internal/workerpool"
+	meta2 "github.com/scaleway/terraform-provider-scaleway/v2/scaleway/meta"
 )
 
 const (
@@ -61,7 +61,7 @@ func newS3Client(httpClient *http.Client, region, accessKey, secretKey string) (
 	return s3.New(s), nil
 }
 
-func NewS3ClientFromMeta(meta *meta.Meta, region string) (*s3.S3, error) {
+func NewS3ClientFromMeta(meta *meta2.Meta, region string) (*s3.S3, error) {
 	accessKey, _ := meta.ScwClient().GetAccessKey()
 	secretKey, _ := meta.ScwClient().GetSecretKey()
 
@@ -79,18 +79,18 @@ func NewS3ClientFromMeta(meta *meta.Meta, region string) (*s3.S3, error) {
 }
 
 func s3ClientWithRegion(d *schema.ResourceData, m interface{}) (*s3.S3, scw.Region, error) {
-	region, err := meta.ExtractRegion(d, m)
+	region, err := meta2.ExtractRegion(d, m)
 	if err != nil {
 		return nil, "", err
 	}
 
-	accessKey, _ := meta.ExtractScwClient(m).GetAccessKey()
-	if projectID, _, err := meta.ExtractProjectID(d, m); err == nil {
+	accessKey, _ := meta2.ExtractScwClient(m).GetAccessKey()
+	if projectID, _, err := meta2.ExtractProjectID(d, m); err == nil {
 		accessKey = accessKeyWithProjectID(accessKey, projectID)
 	}
-	secretKey, _ := meta.ExtractScwClient(m).GetSecretKey()
+	secretKey, _ := meta2.ExtractScwClient(m).GetSecretKey()
 
-	s3Client, err := newS3Client(meta.ExtractHTTPClient(m), region.String(), accessKey, secretKey)
+	s3Client, err := newS3Client(meta2.ExtractHTTPClient(m), region.String(), accessKey, secretKey)
 	if err != nil {
 		return nil, "", err
 	}
@@ -112,19 +112,19 @@ func s3ClientWithRegionAndName(d *schema.ResourceData, m interface{}, id string)
 
 	d.SetId(fmt.Sprintf("%s/%s", region, name))
 
-	accessKey, _ := meta.ExtractScwClient(m).GetAccessKey()
-	secretKey, _ := meta.ExtractScwClient(m).GetSecretKey()
+	accessKey, _ := meta2.ExtractScwClient(m).GetAccessKey()
+	secretKey, _ := meta2.ExtractScwClient(m).GetSecretKey()
 
 	if len(parts) == 2 {
 		accessKey = accessKeyWithProjectID(accessKey, parts[1])
 	} else {
-		projectID, _, err := meta.ExtractProjectID(d, m)
+		projectID, _, err := meta2.ExtractProjectID(d, m)
 		if err == nil {
 			accessKey = accessKeyWithProjectID(accessKey, projectID)
 		}
 	}
 
-	s3Client, err := newS3Client(meta.ExtractHTTPClient(m), region.String(), accessKey, secretKey)
+	s3Client, err := newS3Client(meta2.ExtractHTTPClient(m), region.String(), accessKey, secretKey)
 	if err != nil {
 		return nil, "", "", err
 	}
@@ -138,13 +138,13 @@ func s3ClientWithRegionAndNestedName(d *schema.ResourceData, m interface{}, name
 		return nil, "", "", "", err
 	}
 
-	accessKey, _ := meta.ExtractScwClient(m).GetAccessKey()
-	if projectID, _, err := meta.ExtractProjectID(d, m); err == nil {
+	accessKey, _ := meta2.ExtractScwClient(m).GetAccessKey()
+	if projectID, _, err := meta2.ExtractProjectID(d, m); err == nil {
 		accessKey = accessKeyWithProjectID(accessKey, projectID)
 	}
-	secretKey, _ := meta.ExtractScwClient(m).GetSecretKey()
+	secretKey, _ := meta2.ExtractScwClient(m).GetSecretKey()
 
-	s3Client, err := newS3Client(meta.ExtractHTTPClient(m), region.String(), accessKey, secretKey)
+	s3Client, err := newS3Client(meta2.ExtractHTTPClient(m), region.String(), accessKey, secretKey)
 	if err != nil {
 		return nil, "", "", "", err
 	}
@@ -158,13 +158,13 @@ func s3ClientWithRegionWithNameACL(d *schema.ResourceData, m interface{}, name s
 		return nil, "", name, "", err
 	}
 
-	accessKey, _ := meta.ExtractScwClient(m).GetAccessKey()
-	if projectID, _, err := meta.ExtractProjectID(d, m); err == nil {
+	accessKey, _ := meta2.ExtractScwClient(m).GetAccessKey()
+	if projectID, _, err := meta2.ExtractProjectID(d, m); err == nil {
 		accessKey = accessKeyWithProjectID(accessKey, projectID)
 	}
-	secretKey, _ := meta.ExtractScwClient(m).GetSecretKey()
+	secretKey, _ := meta2.ExtractScwClient(m).GetSecretKey()
 
-	s3Client, err := newS3Client(meta.ExtractHTTPClient(m), region, accessKey, secretKey)
+	s3Client, err := newS3Client(meta2.ExtractHTTPClient(m), region, accessKey, secretKey)
 	if err != nil {
 		return nil, "", "", "", err
 	}
@@ -172,13 +172,13 @@ func s3ClientWithRegionWithNameACL(d *schema.ResourceData, m interface{}, name s
 }
 
 func s3ClientForceRegion(d *schema.ResourceData, m interface{}, region string) (*s3.S3, error) {
-	accessKey, _ := meta.ExtractScwClient(m).GetAccessKey()
-	if projectID, _, err := meta.ExtractProjectID(d, m); err == nil {
+	accessKey, _ := meta2.ExtractScwClient(m).GetAccessKey()
+	if projectID, _, err := meta2.ExtractProjectID(d, m); err == nil {
 		accessKey = accessKeyWithProjectID(accessKey, projectID)
 	}
-	secretKey, _ := meta.ExtractScwClient(m).GetSecretKey()
+	secretKey, _ := meta2.ExtractScwClient(m).GetSecretKey()
 
-	s3Client, err := newS3Client(meta.ExtractHTTPClient(m), region, accessKey, secretKey)
+	s3Client, err := newS3Client(meta2.ExtractHTTPClient(m), region, accessKey, secretKey)
 	if err != nil {
 		return nil, err
 	}

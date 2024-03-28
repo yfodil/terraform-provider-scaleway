@@ -15,9 +15,9 @@ import (
 	mnq "github.com/scaleway/scaleway-sdk-go/api/mnq/v1beta1"
 	"github.com/scaleway/terraform-provider-scaleway/v2/internal/acctest"
 	"github.com/scaleway/terraform-provider-scaleway/v2/internal/httperrors"
-	"github.com/scaleway/terraform-provider-scaleway/v2/internal/meta"
-	"github.com/scaleway/terraform-provider-scaleway/v2/internal/provider"
 	"github.com/scaleway/terraform-provider-scaleway/v2/scaleway"
+	"github.com/scaleway/terraform-provider-scaleway/v2/scaleway/meta"
+	"github.com/scaleway/terraform-provider-scaleway/v2/scaleway/provider"
 	"github.com/stretchr/testify/require"
 )
 

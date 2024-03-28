@@ -44,6 +44,7 @@ type Config struct {
 	ForceAccessKey      string
 	ForceSecretKey      string
 	HTTPClient          *http.Client
+	UserAgent           string
 }
 
 // providerConfigure creates the Meta object containing the SDK client.
@@ -82,7 +83,7 @@ func NewMeta(ctx context.Context, config *Config) (*Meta, error) {
 	// Create scaleway SDK client
 	////
 	opts := []scw.ClientOption{
-		scw.WithUserAgent(customizeUserAgent(version.Version, config.TerraformVersion)),
+		scw.WithUserAgent(customizeUserAgent(version.Version, config.TerraformVersion, config.UserAgent)),
 		scw.WithProfile(profile),
 	}
 
@@ -103,11 +104,15 @@ func NewMeta(ctx context.Context, config *Config) (*Meta, error) {
 	}, nil
 }
 
-func customizeUserAgent(providerVersion string, terraformVersion string) string {
+func customizeUserAgent(providerVersion string, terraformVersion string, ua string) string {
 	userAgent := fmt.Sprintf("terraform-provider/%s terraform/%s", providerVersion, terraformVersion)
 
 	if appendUserAgent := os.Getenv(appendUserAgentEnvVar); appendUserAgent != "" {
 		userAgent += " " + appendUserAgent
+	}
+
+	if ua != "" {
+		userAgent += " " + ua
 	}
 
 	return userAgent

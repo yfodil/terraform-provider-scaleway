@@ -19,8 +19,8 @@ import (
 	natsjwt "github.com/nats-io/jwt/v2"
 	"github.com/nats-io/nats.go"
 	"github.com/scaleway/scaleway-sdk-go/scw"
-	"github.com/scaleway/terraform-provider-scaleway/v2/internal/meta"
 	"github.com/scaleway/terraform-provider-scaleway/v2/internal/types"
+	"github.com/scaleway/terraform-provider-scaleway/v2/scaleway/meta"
 )
 
 const (
