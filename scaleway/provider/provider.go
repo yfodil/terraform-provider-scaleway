@@ -288,15 +288,15 @@ func Provider(config *Config) plugin.ProviderFunc {
 				return config.Meta, nil
 			}
 
-			if p.Meta() != nil {
-				config.Meta = p.Meta().(*meta.Meta)
-				return config.Meta, nil
+			var u *meta.Config
+			if v, ok := p.Meta().(string); ok {
+				u.UserAgent = v
 			}
 
 			m, err := meta.NewMeta(ctx, &meta.Config{
 				ProviderSchema:   data,
 				TerraformVersion: terraformVersion,
-				UserAgent:        config.CrossplaneUserAgent,
+				UserAgent:        u.UserAgent,
 			})
 			if err != nil {
 				return nil, diag.FromErr(err)
