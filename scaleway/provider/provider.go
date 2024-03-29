@@ -10,6 +10,7 @@ import (
 	"github.com/scaleway/scaleway-sdk-go/scw"
 	"github.com/scaleway/terraform-provider-scaleway/v2/internal/locality/regional"
 	"github.com/scaleway/terraform-provider-scaleway/v2/internal/locality/zonal"
+	"github.com/scaleway/terraform-provider-scaleway/v2/internal/logging"
 	"github.com/scaleway/terraform-provider-scaleway/v2/internal/verify"
 	"github.com/scaleway/terraform-provider-scaleway/v2/scaleway"
 	"github.com/scaleway/terraform-provider-scaleway/v2/scaleway/meta"
@@ -288,10 +289,16 @@ func Provider(config *Config) plugin.ProviderFunc {
 				return config.Meta, nil
 			}
 
+			logging.L.Debugf("p Meta", "UserAgent", p.Meta())
+
 			var u meta.Config
 			if v, ok := p.Meta().(*meta.Config); ok {
+				logging.L.Debugf("ENTEEEEEEEEEEEEER")
+
 				u.UserAgent = v.UserAgent
 			}
+
+			logging.L.Debugf("Creating Meta object", "UserAgent", u.UserAgent)
 
 			m, err := meta.NewMeta(ctx, &meta.Config{
 				ProviderSchema:   data,
