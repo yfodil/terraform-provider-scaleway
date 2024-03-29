@@ -293,9 +293,14 @@ func Provider(config *Config) plugin.ProviderFunc {
 
 			var u meta.Config
 			if v, ok := p.Meta().(*meta.Config); ok {
-				logging.L.Debugf("ENTEEEEEEEEEEEEER")
+				logging.L.Debugf("ENTEEEEEEEEEEEEER p.Meta()")
 
 				u.UserAgent = v.UserAgent
+			}
+
+			if config.CrossplaneUserAgent != "" {
+				logging.L.Debugf("ENTEEEEEEEEEEEEER config.CrossplaneUserAgent", config.CrossplaneUserAgent)
+				u.UserAgent = config.CrossplaneUserAgent
 			}
 
 			logging.L.Debugf("Creating Meta object", "UserAgent", u.UserAgent)
