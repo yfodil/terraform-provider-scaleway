@@ -288,7 +288,7 @@ func Provider(config *Config) plugin.ProviderFunc {
 				return config.Meta, nil
 			}
 
-			var u *meta.Config
+			var u meta.Config
 			if v, ok := p.Meta().(*meta.Config); ok {
 				u.UserAgent = v.UserAgent
 			}
