@@ -289,8 +289,8 @@ func Provider(config *Config) plugin.ProviderFunc {
 			}
 
 			var u *meta.Config
-			if v, ok := p.Meta().(string); ok {
-				u.UserAgent = v
+			if v, ok := p.Meta().(*meta.Config); ok {
+				u.UserAgent = v.UserAgent
 			}
 
 			m, err := meta.NewMeta(ctx, &meta.Config{
