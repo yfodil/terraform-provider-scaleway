@@ -8,7 +8,6 @@ import (
 	edgeservices "github.com/scaleway/scaleway-sdk-go/api/edge_services/v1beta1"
 	"github.com/scaleway/scaleway-sdk-go/scw"
 	"github.com/scaleway/terraform-provider-scaleway/v2/internal/httperrors"
-	"github.com/scaleway/terraform-provider-scaleway/v2/internal/identity"
 )
 
 func ResourceHeadStage() *schema.Resource {
@@ -22,7 +21,6 @@ func ResourceHeadStage() *schema.Resource {
 		},
 		SchemaVersion: 0,
 		SchemaFunc:    headStageSchema,
-		Identity:      identity.DefaultGlobal(),
 	}
 }
 
@@ -57,10 +55,7 @@ func ResourceHeadStageCreate(ctx context.Context, d *schema.ResourceData, m any)
 	}
 
 	if dnsStage.HeadStage.DNSStageID != nil {
-		err = identity.SetGlobalIdentity(d, *dnsStage.HeadStage.DNSStageID)
-		if err != nil {
-			return diag.FromErr(err)
-		}
+		d.SetId(*dnsStage.HeadStage.DNSStageID)
 	}
 
 	return ResourceHeadStageRead(ctx, d, m)

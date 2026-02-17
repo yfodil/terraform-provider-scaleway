@@ -8,7 +8,6 @@ import (
 	edgeservices "github.com/scaleway/scaleway-sdk-go/api/edge_services/v1beta1"
 	"github.com/scaleway/scaleway-sdk-go/scw"
 	"github.com/scaleway/terraform-provider-scaleway/v2/internal/httperrors"
-	"github.com/scaleway/terraform-provider-scaleway/v2/internal/identity"
 	"github.com/scaleway/terraform-provider-scaleway/v2/internal/services/account"
 	"github.com/scaleway/terraform-provider-scaleway/v2/internal/types"
 )
@@ -24,7 +23,6 @@ func ResourceCacheStage() *schema.Resource {
 		},
 		SchemaVersion: 0,
 		SchemaFunc:    cacheStageSchema,
-		Identity:      identity.DefaultGlobal(),
 	}
 }
 
@@ -128,10 +126,7 @@ func ResourceCacheStageCreate(ctx context.Context, d *schema.ResourceData, m any
 		return diag.FromErr(err)
 	}
 
-	err = identity.SetGlobalIdentity(d, cacheStage.ID)
-	if err != nil {
-		return diag.FromErr(err)
-	}
+	d.SetId(cacheStage.ID)
 
 	return ResourceCacheStageRead(ctx, d, m)
 }
@@ -160,11 +155,6 @@ func ResourceCacheStageRead(ctx context.Context, d *schema.ResourceData, m any) 
 	_ = d.Set("waf_stage_id", types.FlattenStringPtr(cacheStage.WafStageID))
 	_ = d.Set("fallback_ttl", cacheStage.FallbackTTL.Seconds)
 	_ = d.Set("include_cookies", cacheStage.IncludeCookies)
-
-	err = identity.SetGlobalIdentity(d, cacheStage.ID)
-	if err != nil {
-		return diag.FromErr(err)
-	}
 
 	return nil
 }
