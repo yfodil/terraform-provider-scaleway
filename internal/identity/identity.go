@@ -22,6 +22,19 @@ func DefaultZonal() *schema.ResourceIdentity {
 	})
 }
 
+// DefaultRegional should be used as the default identity schema for regional resources.
+// For instance if you want an id with the form fr-par/11111111-1111-1111-1111-111111111111
+func DefaultRegional() *schema.ResourceIdentity {
+	return WrapSchemaMap(map[string]*schema.Schema{
+		"id": {
+			Type:              schema.TypeString,
+			Description:       "The id of the resource (UUID format)",
+			RequiredForImport: true,
+		},
+		"region": DefaultRegionAttribute(),
+	})
+}
+
 // DefaultGlobal should be used as the default identity schema for global/flat resources.
 // For instance if you want an id with the form 11111111-1111-1111-1111-111111111111 (UUID only)
 func DefaultGlobal() *schema.ResourceIdentity {
