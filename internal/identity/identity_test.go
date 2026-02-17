@@ -1,8 +1,9 @@
-package identity
+package identity_test
 
 import (
 	"testing"
 
+	"github.com/scaleway/terraform-provider-scaleway/v2/internal/identity"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -10,8 +11,8 @@ func TestParseMultiPartID(t *testing.T) {
 	tests := []struct {
 		name     string
 		id       string
-		keyOrder []string
 		expected map[string]string
+		keyOrder []string
 	}{
 		{
 			name:     "two parts",
@@ -84,7 +85,7 @@ func TestParseMultiPartID(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result := ParseMultiPartID(tt.id, tt.keyOrder...)
+			result := identity.ParseMultiPartID(tt.id, tt.keyOrder...)
 			assert.Equal(t, tt.expected, result)
 		})
 	}
