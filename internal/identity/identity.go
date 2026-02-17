@@ -1,6 +1,7 @@
 package identity
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -121,6 +122,16 @@ func SetGlobalIdentity(d *schema.ResourceData, id string) error {
 
 // SetMultiPartIdentity sets identity attributes and constructs a composite ID from multiple parts
 func SetMultiPartIdentity(d *schema.ResourceData, values map[string]string, keyOrder ...string) error {
+	if len(keyOrder) != len(values) {
+		return fmt.Errorf("keyOrder length (%d) does not match values length (%d)", len(keyOrder), len(values))
+	}
+
+	for _, key := range keyOrder {
+		if _, exists := values[key]; !exists {
+			return fmt.Errorf("key %q from keyOrder not found in values", key)
+		}
+	}
+
 	identity, err := d.Identity()
 	if err != nil {
 		return err
