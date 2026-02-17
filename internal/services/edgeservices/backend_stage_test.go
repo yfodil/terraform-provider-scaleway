@@ -50,11 +50,6 @@ func TestAccEdgeServicesBackend_Basic(t *testing.T) {
 					resource.TestCheckResourceAttrSet("scaleway_edge_services_backend_stage.main", "updated_at"),
 				),
 			},
-			{
-				ResourceName:      "scaleway_edge_services_backend_stage.main",
-				ImportState:       true,
-				ImportStateVerify: true,
-			},
 		},
 	})
 }

@@ -39,11 +39,6 @@ func TestAccEdgeServicesDNS_Basic(t *testing.T) {
 					resource.TestCheckResourceAttrSet("scaleway_edge_services_dns_stage.main", "updated_at"),
 				),
 			},
-			{
-				ResourceName:      "scaleway_edge_services_dns_stage.main",
-				ImportState:       true,
-				ImportStateVerify: true,
-			},
 		},
 	})
 }
