@@ -170,7 +170,6 @@ func TestSDKProvider_ResourceIdentityNotEmpty(t *testing.T) {
 		"scaleway_edge_services_backend_stage",
 		"scaleway_edge_services_dns_stage",
 		"scaleway_edge_services_head_stage",
-		"scaleway_edge_services_pipeline",
 		"scaleway_edge_services_route_stage",
 		"scaleway_edge_services_tls_stage",
 		"scaleway_edge_services_waf_stage",
