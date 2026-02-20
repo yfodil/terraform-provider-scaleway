@@ -460,7 +460,7 @@ func resourceLbBackendCreate(ctx context.Context, d *schema.ResourceData, m any)
 		return diag.FromErr(err)
 	}
 
-	err = identity.SetZonalIdentity(d, zone, res.ID)
+	err = identity.SetZonalIdentity(d, res.LB.Zone, res.ID)
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -501,7 +501,7 @@ func resourceLbBackendRead(ctx context.Context, d *schema.ResourceData, m any) d
 
 	diags := setBackendState(d, backend, zone)
 
-	err = identity.SetZonalIdentity(d, zone, backend.ID)
+	err = identity.SetZonalIdentity(d, backend.LB.Zone, backend.ID)
 	if err != nil {
 		return diag.FromErr(err)
 	}
