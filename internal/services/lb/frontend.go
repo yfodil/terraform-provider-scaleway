@@ -351,6 +351,7 @@ func resourceLbFrontendRead(ctx context.Context, d *schema.ResourceData, m any) 
 	}
 
 	var acls []*lbSDK.ACL
+
 	if !d.Get("external_acls").(bool) {
 		// read related acls.
 		resACL, err := lbAPI.ListACLs(&lbSDK.ZonedAPIListACLsRequest{

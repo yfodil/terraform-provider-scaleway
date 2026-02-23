@@ -78,6 +78,7 @@ func DataSourceLbFrontendRead(ctx context.Context, d *schema.ResourceData, m any
 	}
 
 	var acls []*lbSDK.ACL
+
 	resACL, err := api.ListACLs(&lbSDK.ZonedAPIListACLsRequest{
 		Zone:       zone,
 		FrontendID: locality.ExpandID(frontID.(string)),
