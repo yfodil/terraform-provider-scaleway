@@ -106,7 +106,7 @@ func resourceLbIPCreate(ctx context.Context, d *schema.ResourceData, m any) diag
 		return diag.FromErr(err)
 	}
 
-	err = identity.SetZonalIdentity(d, zone, res.ID)
+	err = identity.SetZonalIdentity(d, res.Zone, res.ID)
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -150,7 +150,7 @@ func resourceLbIPRead(ctx context.Context, d *schema.ResourceData, m any) diag.D
 
 	diags := setIPState(d, ip, zone)
 
-	err = identity.SetZonalIdentity(d, zone, ip.ID)
+	err = identity.SetZonalIdentity(d, ip.Zone, ip.ID)
 	if err != nil {
 		return diag.FromErr(err)
 	}
