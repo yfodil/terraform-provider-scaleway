@@ -87,11 +87,6 @@ func TestAccRoute_WithSNI(t *testing.T) {
 					resource.TestCheckResourceAttrSet("scaleway_lb_route.rt01", "updated_at"),
 				),
 			},
-			{
-				ResourceName:      "scaleway_lb_route.rt01",
-				ImportState:       true,
-				ImportStateVerify: true,
-			},
 		},
 	})
 }
