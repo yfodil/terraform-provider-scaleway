@@ -81,6 +81,9 @@ func DataSourceFlexibleIPRead(ctx context.Context, d *schema.ResourceData, m any
 	d.SetId(zoneID)
 
 	err = d.Set("flexible_ip_id", zoneID)
+	if err != nil {
+		return diag.FromErr(err)
+	}
 
 	_, err = waitFlexibleIP(ctx, fipAPI, zone, locality.ExpandID(ipID.(string)), d.Timeout(schema.TimeoutRead))
 	if err != nil {
