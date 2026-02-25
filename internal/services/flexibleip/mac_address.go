@@ -152,6 +152,7 @@ func ResourceFlexibleIPMACRead(ctx context.Context, d *schema.ResourceData, m an
 	}
 
 	fipIDRaw := d.Get("flexible_ip_id")
+
 	var fip *flexibleip.FlexibleIP
 
 	if fipIDRaw != nil && fipIDRaw.(string) != "" {
@@ -179,6 +180,7 @@ func ResourceFlexibleIPMACRead(ctx context.Context, d *schema.ResourceData, m an
 		if err != nil {
 			return diag.FromErr(err)
 		}
+
 		if fip == nil {
 			d.SetId("")
 
@@ -187,6 +189,7 @@ func ResourceFlexibleIPMACRead(ctx context.Context, d *schema.ResourceData, m an
 	}
 
 	_ = d.Set("flexible_ip_id", zonal.NewIDString(zone, fip.ID))
+
 	if fip.MacAddress != nil {
 		_ = d.Set("type", fip.MacAddress.MacType.String())
 		_ = d.Set("address", fip.MacAddress.MacAddress)
