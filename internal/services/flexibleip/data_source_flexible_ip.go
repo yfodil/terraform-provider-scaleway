@@ -8,6 +8,7 @@ import (
 	flexibleip "github.com/scaleway/scaleway-sdk-go/api/flexibleip/v1alpha1"
 	"github.com/scaleway/scaleway-sdk-go/scw"
 	"github.com/scaleway/terraform-provider-scaleway/v2/internal/datasource"
+	"github.com/scaleway/terraform-provider-scaleway/v2/internal/locality"
 	"github.com/scaleway/terraform-provider-scaleway/v2/internal/types"
 	"github.com/scaleway/terraform-provider-scaleway/v2/internal/verify"
 )
@@ -79,19 +80,18 @@ func DataSourceFlexibleIPRead(ctx context.Context, d *schema.ResourceData, m any
 	zoneID := datasource.NewZonedID(ipID, zone)
 	d.SetId(zoneID)
 
-	err = d.Set("flexible_ip_id", zoneID)
+	_, err = waitFlexibleIP(ctx, fipAPI, zone, locality.ExpandID(ipID.(string)), d.Timeout(schema.TimeoutRead))
 	if err != nil {
 		return diag.FromErr(err)
 	}
 
-	diags := ResourceFlexibleIPRead(ctx, d, m)
-	if diags != nil {
-		return append(diags, diag.Errorf("failed to read flexible ip state")...)
+	flexibleIP, err := fipAPI.GetFlexibleIP(&flexibleip.GetFlexibleIPRequest{
+		Zone:  zone,
+		FipID: locality.ExpandID(ipID.(string)),
+	}, scw.WithContext(ctx))
+	if err != nil {
+		return diag.FromErr(err)
 	}
 
-	if d.Id() == "" {
-		return diag.Errorf("flexible ip (%s) not found", ipID)
-	}
-
-	return nil
+	return setFlexibleIPState(d, flexibleIP, zone)
 }
