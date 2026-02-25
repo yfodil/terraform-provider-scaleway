@@ -80,6 +80,11 @@ func DataSourceLbRead(ctx context.Context, d *schema.ResourceData, m any) diag.D
 	zonedID := datasource.NewZonedID(lbID, zone)
 	d.SetId(zonedID)
 
+	err = d.Set("lb_id", zonedID)
+	if err != nil {
+		return diag.FromErr(err)
+	}
+
 	lb, err := waitForInstances(ctx, api, zone, locality.ExpandID(lbID.(string)), d.Timeout(schema.TimeoutRead))
 	if err != nil {
 		return diag.FromErr(err)
