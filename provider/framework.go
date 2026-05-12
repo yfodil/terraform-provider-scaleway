@@ -264,6 +264,7 @@ func (p *ScalewayProvider) ListResources(_ context.Context) []func() list.ListRe
 		ipam.NewIPListResource,
 		vpcgw.NewPublicGatewayListResource,
 		lb.NewLbListResource,
+		lb.NewFrontendListResource,
 	}
 }
 
