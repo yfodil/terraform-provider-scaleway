@@ -265,6 +265,7 @@ func (p *ScalewayProvider) ListResources(_ context.Context) []func() list.ListRe
 		vpcgw.NewPublicGatewayListResource,
 		lb.NewLbListResource,
 		lb.NewFrontendListResource,
+		lb.NewBackendListResource,
 	}
 }
 
