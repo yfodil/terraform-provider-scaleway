@@ -55,7 +55,7 @@ func (r *IPListResource) ListResourceConfigSchema(_ context.Context, _ list.List
 				Optional:    true,
 			},
 			"is_free": schema.BoolAttribute{
-				Description: "When true, only unattached IPs are returned; when false, only IPs attached to a gateway",
+				Description: "Filter based on whether the IP is attached to a gateway or not",
 				Optional:    true,
 			},
 		},

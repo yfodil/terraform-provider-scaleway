@@ -2,12 +2,10 @@
 page_title: "Scaleway: scaleway_vpc_public_gateway_ip"
 subcategory: "VPC Gateway"
 description: |-
-  Lists Scaleway Public Gateway flexible IP addresses.
+  Lists Public Gateway IP addresses across zones and projects.
 ---
 
 # Resource: scaleway_vpc_public_gateway_ip
-
-Lists Public Gateway IP addresses across zones and projects (same product as the `scaleway_vpc_public_gateway_ip` resource).
 
 For more information, see [the main documentation](https://www.scaleway.com/en/docs/network/vpc/how-to/create-a-public-gateway/).
 
